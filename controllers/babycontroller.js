@@ -3,10 +3,12 @@ const { Baby } = require("../models");
 const validateSession = require("../middleware/validate-session");
 const router = Router();
 
-router.post("/test", function (req, res) {
-  res.send("It worked");
-});
+
+
 router.post("/create", validateSession, function (req, res) {
+  if (req.user.role != 'Admin' ) {
+    res.json({message: "You are not an Admin!!!" })
+  }
   console.log(req.user.id);
   const babyEntry = {
     name: req.body.name,

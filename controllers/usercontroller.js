@@ -16,10 +16,12 @@ router.get("/get", function (req, res) {
   );
 });
 
+
 router.post("/create", function (req, res) {
   User.create({
     username: req.body.username,
     passwordhash: bcrypt.hashSync(req.body.password, 13),
+    role: "User"
   })
     .then(function createSuccess(user) {
       let token = jwt.sign({ id: user.id, username: user.username }, "test", {
